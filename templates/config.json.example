@@ -1,0 +1,28 @@
+{
+  "_comment": "КОНФИГУРАЦИЯ БОТА - скопируйте в configs/config.json и настройте",
+  "_warning": "Удалите комментарии (строки с _) в рабочем файле!",
+  
+  "schedule": {
+    "_comment_schedule": "Время в формате ЧЧ:ММ (24-часовой формат)",
+    "questions": ["10:00", "14:00", "18:00"],
+    "facts": ["12:00"]
+  },
+  
+  "settings": {
+    "_comment_timezone": "Часовой пояс сервера",
+    "timezone": "Europe/Moscow",
+    
+    "_comment_random_delay": "Случайная задержка в минутах (0-5), 0 = без задержки",
+    "random_delay_minutes": 2,
+    
+    "_comment_limits": "Лимиты",
+    "max_questions_per_day": 3,
+    "skip_weekends": false
+  },
+  
+  "messages": {
+    "_comment_messages": "Шаблоны сообщений (опционально)",
+    "fact_header": "📚 ФАКТ ДНЯ\n\n",
+    "question_header": "🧠 ВИКТОРИНА\n\n"
+  }
+}
