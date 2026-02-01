@@ -21,7 +21,7 @@ jobs:
         python -m py_compile src/bot.py
         echo "✅ Синтаксис Python правильный"
     
-    # 2. Проверяем что шаблоны - валидныgit add .е файлы
+    # 2. Проверяем что шаблоны - валидные файлы
     - name: Validate templates
       run: |
         echo "🔍 Проверяем шаблоны..."
@@ -35,17 +35,16 @@ jobs:
     - name: Check project structure
       run: |
         echo "🔍 Проверяем структуру..."
-        [ -f "src/bot.py" ] || exit 1
-        [ -f ".gitignore" ] || exit 1
-        [ -f "README.md" ] || exit 1
+        if [ ! -f "src/bot.py" ]; then exit 1; fi
+        if [ ! -f ".gitignore" ]; then exit 1; fi
+        if [ ! -f "README.md" ]; then exit 1; fi
         echo "✅ Все необходимые файлы на месте"
     
     # 4. Проверяем что важные импорты есть
     - name: Check critical imports
       run: |
         echo "🔍 Проверяем импорты..."
-        python -c "
-import sys
+        python -c "import sys
 try:
     import asyncio
     import csv
@@ -54,8 +53,7 @@ try:
     print('✅ Все системные импорты работают')
 except ImportError as e:
     print(f'❌ Ошибка: {e}')
-    sys.exit(1)
-        "
+    sys.exit(1)"
     
     - name: Success
       run: echo "🎉 Все проверки пройдены! Код готов к работе."
