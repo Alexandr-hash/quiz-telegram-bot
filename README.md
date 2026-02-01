@@ -1,4 +1,5 @@
 # Quiz Telegram Bot
+![CI Status](https://github.com/Alexandr-hash/quiz-telegram-bot/actions/workflows/python-ci.yml/badge.svg)
 
 Бот для автоматической публикации викторин и фактов в Telegram-канал.
 
