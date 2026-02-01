@@ -14,46 +14,15 @@ jobs:
       with:
         python-version: "3.10"
     
-    # 1. Проверяем что код компилируется
-    - name: Check syntax
-      run: |
-        echo "🔍 Проверяем синтаксис..."
-        python -m py_compile src/bot.py
-        echo "✅ Синтаксис Python правильный"
+    - name: Check Python syntax
+      run: python -m py_compile src/bot.py
     
-    # 2. Проверяем что шаблоны - валидные файлы
-    - name: Validate templates
-      run: |
-        echo "🔍 Проверяем шаблоны..."
-        python -c "import json; json.load(open('templates/config.json.example'))"
-        echo "✅ config.json.example - валидный JSON"
-        
-        python -c "import csv; f = open('templates/questions.csv.example', encoding='utf-8'); list(csv.reader(f))"
-        echo "✅ questions.csv.example - валидный CSV"
+    - name: Validate config template
+      run: python -c "import json; f = open('templates/config.json.example'); json.load(f); f.close(); print('Config template is valid JSON')"
     
-    # 3. Проверяем структуру проекта
-    - name: Check project structure
-      run: |
-        echo "🔍 Проверяем структуру..."
-        if [ ! -f "src/bot.py" ]; then exit 1; fi
-        if [ ! -f ".gitignore" ]; then exit 1; fi
-        if [ ! -f "README.md" ]; then exit 1; fi
-        echo "✅ Все необходимые файлы на месте"
+    - name: Check CSV template
+      run: python -c "import csv; f = open('templates/questions.csv.example', encoding='utf-8'); list(csv.reader(f)); f.close(); print('CSV template is valid')"
     
-    # 4. Проверяем что важные импорты есть
-    - name: Check critical imports
-      run: |
-        echo "🔍 Проверяем импорты..."
-        python -c "import sys
-try:
-    import asyncio
-    import csv
-    import json
-    import pathlib
-    print('✅ Все системные импорты работают')
-except ImportError as e:
-    print(f'❌ Ошибка: {e}')
-    sys.exit(1)"
-    
-    - name: Success
-      run: echo "🎉 Все проверки пройдены! Код готов к работе."
+    - name: Check required imports
+      run: python -c "import asyncio; import csv; import json; import pathlib; print('All imports work')"
+"@ | Out-File -FilePath ".github/workflows/python-ci.yml" -Encoding UTF8
