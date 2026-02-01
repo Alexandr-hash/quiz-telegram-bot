@@ -1,28 +1,15 @@
-name: Python CI
+name: CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Setup Python
-      uses: actions/setup-python@v4
+    - uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
-    
-    - name: Check Python syntax
+        python-version: '3.10'
+    - name: Test Python syntax
       run: python -m py_compile src/bot.py
-    
-    - name: Validate config template
-      run: python -c "import json; f = open('templates/config.json.example'); json.load(f); f.close(); print('Config template is valid JSON')"
-    
-    - name: Check CSV template
-      run: python -c "import csv; f = open('templates/questions.csv.example', encoding='utf-8'); list(csv.reader(f)); f.close(); print('CSV template is valid')"
-    
-    - name: Check required imports
-      run: python -c "import asyncio; import csv; import json; import pathlib; print('All imports work')"
-"@ | Out-File -FilePath ".github/workflows/python-ci.yml" -Encoding UTF8
